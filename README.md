@@ -1,7 +1,7 @@
 # DotSunda
 
 > [!WARNING]
-> This project is still experimental, still needs some trial and error until we'll publish it
+> This project is still experimental, still needs some trial and error until we publish it
 
 The quickest sundanese dialect parser ever. Designed to be readable,
 easy to use, pluggable with external parsers, and fast when parsing!
