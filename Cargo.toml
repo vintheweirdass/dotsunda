@@ -1,0 +1,26 @@
+# $schema = "https://json.schemastore.org/cargo.json"
+[package]
+name = "dotsunda"
+version = "0.1.0"
+edition = "2024"
+exclude = [
+    "/playground/",
+    "/.*/",
+    "/deno.*",
+    "/Makefile.toml",
+    "/Cargo.lock",
+    "/src/main.rs"
+]
+include = ["/guides/", "/README.md", "/LICENSE"]
+license = "Apache-2.0"
+
+[dependencies]
+pest = {version="2.8.3", default-features=false}
+pest_derive = {version="2.8.3", default-features=false}
+ux = {version="0.1.6", default-features=false, optional=true}
+
+
+[features]
+default = ["std"]
+ux_numbering = ["ux"]
+std = ["pest/std", "pest_derive/std", "ux?/std"] 

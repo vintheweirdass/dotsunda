@@ -1,0 +1,141 @@
+content = { SOI ~ AnySyntax+ ~ EOI }
+
+AnySyntax = _{
+    SundaContent
+  | OuterContent
+}
+
+SundaContentParenthese = _{ "'" }
+
+
+SundaContent = {
+    SundaContentParenthese ~ (VisiblePlainContent? ~ (SundaWord|SundaNumbers) ~ ((VisiblePlainContent? ~ (SundaWord|SundaNumbers)))* ~ VisiblePlainContent?) ~ SundaContentParenthese
+}
+
+VisiblePlainContent = { (!(ASCII_ALPHA | SundaContentParenthese | NUMBER ) ~ ((EscapeSymbol ~ EscapedChar) | PlainChars))+ }
+PlainChars = {(!(ASCII_ALPHA | SundaContentParenthese | NUMBER | EscapeSymbol)~ ANY)+}
+
+SundaWord = { (Syllable)+ }
+
+NgalagenaWithRarangkenReplacer = { Consonant ~ RarangkenReplacer }
+
+NgalagenaWithRarangkenRemover = { Consonant }
+
+NgalagenaWithRarangkenInfix = { Consonant ~ RarangkenInfix ~ Spell_A }
+
+NgalagenaWithRarangkenSuffix = { Consonant ~ Spell_A ~ RarangkenSuffix ~ !(Vocal) }
+
+Ngalagena = { Consonant ~ Spell_A }
+
+VocalWithRarangkenSuffix = { Vocal ~ RarangkenSuffix }
+
+Syllable = _{
+  | NgalagenaWithRarangkenSuffix
+  | VocalWithRarangkenSuffix
+  | NgalagenaWithRarangkenReplacer
+  | Ngalagena
+  | Vocal
+  | NgalagenaWithRarangkenRemover
+  | NgalagenaWithRarangkenInfix
+}
+
+// list of words.. ig?
+
+Spell_A = _{ "a" | "A" }
+Spell_I = _{ "i" | "I" }
+Spell_U = _{ "u" | "U" }
+Spell_E = _{ "e" | "E" }
+Spell_EAcute = _{ "^e" | "^E" | "é" | "É" }
+Spell_Eu = _{ "eu" | "EU" | "Eu" | "eU" }
+Spell_O = _{ "o" | "O" }
+Spell_K = _{ "k" | "K" }
+Spell_P = _{ "p" | "P" }
+Spell_B = _{ "b" | "B" }
+Spell_M = _{ "m" | "M" }
+Spell_Y = _{ "y" | "Y" }
+Spell_Q = _{ "q" | "Q" }
+Spell_R = _{ "r" | "R" }
+Spell_G = _{ "g" | "G" }
+Spell_C = _{ "c" | "C" }
+Spell_J = _{ "j" | "J" }
+Spell_T = _{ "t" | "T" }
+Spell_D = _{ "d" | "D" }
+Spell_N = _{ "n" | "N" }
+Spell_L = _{ "l" | "L" }
+Spell_S = _{ "s" | "S" }
+Spell_W = _{ "w" | "W" }
+Spell_H = _{ "h" | "H" }
+Spell_F = _{ "f" | "F" }
+Spell_V = _{ "v" | "V" }
+Spell_Z = _{ "z" | "Z" }
+Spell_X = _{ "x" | "X" }
+Spell_Ng = _{ "ng" | "nG" | "Ng" | "NG" }
+Spell_Ny = _{ "ny" | "nY" | "Ny" | "NY" }
+Spell_Sy = _{ "sy" | "sY" | "Sy" | "SY" }
+Spell_Kh = _{ "kh" | "kH" | "Kh" | "KH" }
+_SundaNumbersBound = _{ SundaNumbers }
+SundaNumbers = { ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9")+ }
+
+
+Vocal = @{
+    Spell_A
+  | Spell_I
+  | Spell_U
+  | Spell_E
+  | Spell_EAcute
+  | Spell_Eu
+  | Spell_O
+}
+
+// Konsonan Sunda
+
+Consonant = @{
+    Spell_Kh
+  | Spell_K
+  | Spell_C
+  | Spell_T
+  | Spell_P
+  | Spell_Y
+  | Spell_W
+  | Spell_G
+  | Spell_J
+  | Spell_D
+  | Spell_B
+  | Spell_R
+  | Spell_Sy
+  | Spell_S
+  | Spell_Ng
+  | Spell_Ny
+  | Spell_N
+  | Spell_M
+  | Spell_L
+  | Spell_H
+  | Spell_Q
+  | Spell_F
+  | Spell_V
+  | Spell_Z
+  | Spell_X
+}
+
+RarangkenReplacer = {
+    Spell_I
+  | Spell_U
+  | Spell_E
+  | Spell_EAcute
+  | Spell_Eu
+  | Spell_O
+}
+
+RarangkenSuffix = { Spell_Ng | Spell_R | Spell_H }
+
+RarangkenInfix = { Spell_Y | Spell_R | Spell_L }
+
+OuterContent = { ((EscapeSymbol ~ EscapedChar) | OuterChars)+ }
+
+EscapeSymbol = _{ "\\" }
+
+EscapedChar = { ANY }
+
+// EscapedReservedChar =  { SundaContentParentheses | SundaNumberParentheses | EscapeSymbol }
+
+OuterChars = { (!(SundaContentParenthese | EscapeSymbol) ~ ANY)+ }

@@ -1,0 +1,7 @@
+// this root folder is NOT meant to be published on deno or jsr.
+// this file is just a placefolder for the deno runtime
+{
+  "imports": {
+    "@std/path": "jsr:@std/path@^1.1.2"
+  }
+}

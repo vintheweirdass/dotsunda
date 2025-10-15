@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "pest.pest-ide-tools",
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml",
+        "denoland.vscode-deno"
+    ]
+}
